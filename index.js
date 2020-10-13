@@ -7,6 +7,7 @@ if (cluster.isMaster) {
   // Cause index.js to be executed "again" but
   // in child mode
   cluster.fork();
+  cluster.fork();
   // cluster.fork(); // uncomment to add more children
   // cluster.fork();
   // cluster.fork();
