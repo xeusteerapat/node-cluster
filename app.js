@@ -1,13 +1,26 @@
-process.env.UV_THREADPOOL_SIZE = 1;
-const { pbkdf2 } = require('crypto');
-
 const express = require('express');
+const Worker = require('web-worker');
+
 const app = express();
 
 app.get('/', (req, res) => {
-  pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
-    res.send('Hi, Node.js');
+  const worker = new Worker(__filename, function () {
+    this.onmessage = function () {
+      let counter = 0;
+      while (counter < 1e9) {
+        counter++;
+      }
+
+      postMessage(counter);
+    };
   });
+
+  worker.onmessage = function (message) {
+    console.log(message.data);
+    res.send('' + message.data);
+  };
+
+  worker.postMessage();
 });
 
 app.get('/fast', (req, res) => {
