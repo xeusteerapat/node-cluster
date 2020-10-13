@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.js"
+    "start": "node index.js",
+    "benchmark": "ab -c 50 -n 500 localhost:5000/fast"
   },
   "keywords": [],
   "author": "",
